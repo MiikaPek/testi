@@ -10,7 +10,6 @@ const mongodb = require("mongodb");
 
 // Ota bodyparser käyttöön
 const bodyparser = require("body-parser");
-const bodyParser = require("body-parser");
 
 // Aseta määritykset express-palvelimelle
 // Ota käyttöön public-tiedosto
