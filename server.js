@@ -15,7 +15,7 @@ const bodyparser = require("body-parser");
 // Ota käyttöön public-tiedosto
 app.use(express.static("public"));
     // Ota käyttöön bodyparser
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyparser.urlencoded({extended:false}));
 
 // Laitetaan palvelin kuuntelemaan porttia 8080
 const server = app.listen(8080, function(){});
