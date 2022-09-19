@@ -1,23 +1,25 @@
-// Ota mongoose käyttöön
-const mongoose = require("mongoose");
+//Otetaan Mongoose käytöön
+const mongoose = require('mongoose');
 
 const bookSchema = mongoose.Schema;
 
-let book = new bookSchema ({
+//Muokkaa tämä osion harjoitustyössä oman tietorakenteen mukaan
+let book = new bookSchema ( {
     title: {
-        type: String
+    type: String
     },
     author: {
-        type: String
+      type: String
     },
     publisher: {
-        type: String
-    }, 
+      type: String
+    },
     read: {
-        type: boolean
+      type: Boolean
     }
-},
-    {colelction: "book"}
-);
+  },
+    { collection: 'book'}
+  )
 
-module.exports = mongoose.model("book", book);
+// Export model, huom! Parametreina kokoelman nimi ja skeeman nimi, jotka pitää vaihtaa harkkatyön mukaiseksi.
+module.exports = mongoose.model('book', book);

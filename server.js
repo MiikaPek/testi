@@ -1,21 +1,52 @@
 // Ota express käyttöön
-const express = require("express");
-const app =express();
+const express =  require('express');
+const app = express();
 
-// Ota mongoose käyttöön
-const mongoose = require("mongoose");
+// Ota mongoose käyttöön -> tietokantayhteys
+const mongoose = require('mongoose');
 
-// Ota MongoDB käyttöön
-const mongodb = require("mongodb");
+//Ota books käyttöön - muista vaihtaa harkassa oikea tiedoston nimi
+const book = require('./bookSchema.js');
 
-// Ota bodyparser käyttöön
-const bodyparser = require("body-parser");
+//Ota mongodb käyttöön -- palataan asiaan, tarviiko asentaa erikseen
+const mongodb = require('mongodb');
 
-// Aseta määritykset express-palvelimelle
-// Ota käyttöön public-tiedosto
-app.use(express.static("public"));
-    // Ota käyttöön bodyparser
+//Ota bodyparser käyttöön lomakkeen käsittelyä varten
+const bodyparser = require('body-parser');
+
+//Aseta määritykset express-palvelimelle
+//Ota käyttöön public-tiedosto
+app.use(express.static('public'));
+//Ota käyttöön bodyparser
 app.use(bodyparser.urlencoded({extended:false}));
 
-// Laitetaan palvelin kuuntelemaan porttia 8080
+//Muodostetaan tietokantayhteys
+// Luo vakio connectionstringille
+const uri = 'mongodb+srv://Miika:admin@cluster0.fdgqsic.mongodb.net/book?retryWrites=true&w=majority'
+// Muodostetaan yhteys tietokantaan
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser:true})
+
+// Luodaan vakio tietokantayhteydelle
+const db = mongoose.connection
+// Näytä ilmoitus, jos yhteys ok
+db.once('open', function() {
+    console.log('Tietokantayhteys avattu');
+})
+
+// Kirjoita get-funktio, req.query toimii nyt
+app.get('/book', function(req,res) {
+    //  Hae kirjat tietokannasta
+    book.find(req.query, function( err, result) { //tyhjät {} hakuehdossa tuo kaikki, req.query rajaa hakua
+        if (err) {
+            res.send(err)
+        } else {
+            res.send(result);
+       }
+    })
+    });
+
+// Kirjan lisäys funktion
+
+
+//Laitetaan palvelin kuuntelemaan porttia 8080
 const server = app.listen(8080, function(){});
