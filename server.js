@@ -22,7 +22,9 @@ app.use(bodyparser.urlencoded({extended:false}));
 
 //Muodostetaan tietokantayhteys
 // Luo vakio connectionstringille
+
 const uri = 'mongodb+srv://Miika:admin@cluster0.fdgqsic.mongodb.net/book?retryWrites=true&w=majority'
+
 // Muodostetaan yhteys tietokantaan
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser:true})
 
@@ -34,16 +36,16 @@ db.once('open', function() {
 })
 
 // Kirjoita get-funktio, req.query toimii nyt
-app.get('/book', function(req,res) {
-    //  Hae kirjat tietokannasta
+app.get('/books', function(req,res) {
+     // Hae kirjat tietokannasta
     book.find(req.query, function( err, result) { //tyhjät {} hakuehdossa tuo kaikki, req.query rajaa hakua
         if (err) {
             res.send(err)
         } else {
             res.send(result);
-       }
+        }
     })
-    });
+    })
 
 // Kirjan lisäys post-funktio
 app.post('/newBook', function (req, res) {
@@ -53,7 +55,7 @@ app.post('/newBook', function (req, res) {
     //Lisätään collectioniin uusi kirja
     db.collection('books').insertOne(req.body);
     res.send('Book is added with following data: ' + JSON.stringify(req.body)); //req.body on JSON-objekti, joten muutetaan se Stringiksi ennen palautusta.
-});
+})
 
 // Poistofunktio
 app.post('/deleteBook', function (req, res) {
@@ -66,7 +68,7 @@ app.post('/deleteBook', function (req, res) {
         }
     });
    
-});
+})
 
 // Päivitysfunktio
 app.post('/updateBook', function(req,res){
@@ -79,7 +81,7 @@ app.post('/updateBook', function(req,res){
         }
     });
    
-});
+})
 
 
 //Laitetaan palvelin kuuntelemaan porttia 8080

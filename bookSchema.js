@@ -6,7 +6,7 @@ const bookSchema = mongoose.Schema;
 //Muokkaa tämä osion harjoitustyössä oman tietorakenteen mukaan
 let book = new bookSchema ( {
     title: {
-    type: String
+       type: String
     },
     author: {
       type: String
@@ -18,8 +18,8 @@ let book = new bookSchema ( {
       type: Boolean
     }
   },
-    { collection: 'book'}
+    { collection: 'books'}
   )
 
 // Export model, huom! Parametreina kokoelman nimi ja skeeman nimi, jotka pitää vaihtaa harkkatyön mukaiseksi.
-module.exports = mongoose.model('book', book);
+module.exports = mongoose.model('books', book);
